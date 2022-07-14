@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>Hello to Api
+    <li>/api/urls GET # get all urls </li>
+    <li>/api/url POST # create pico url </li>
+    </ul>
+    <div class="form-group">
+        <form method="POST">
+            <textarea class="form-control" rows="1" name="url_original">
+                enter url to make shorter
+            </textarea>
+            <br>
+            <p name="result">{{ new_url.url_shortened }}</p>
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Add Note</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
