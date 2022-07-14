@@ -1,6 +1,7 @@
 from flask import Flask #, jsonify,request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from datetime import datetime,timedelta
 import string
 import random
 import os
@@ -37,3 +38,15 @@ def get_random():
     alfabet = string.ascii_lowercase
     nums = "0123456789" * 2
     return ''.join(random.choices(alfabet + nums, k =5))
+
+def filter_database(table):
+    now = datetime.now()
+    # t = timedelta(2)
+    # time = t +now
+    db_query = table.query.all()
+    for url in db_query:
+        if url.date < now:
+            db.session.delete(url)
+            db.session.commit()
+            
+    
