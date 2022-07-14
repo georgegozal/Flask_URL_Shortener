@@ -18,7 +18,9 @@ def create_app():
     
 
     from api.views import api
-    app.register_blueprint(api, url_prefix='/')
+    from url_shortener.views import url_short
+    app.register_blueprint(api, url_prefix='/api')
+    app.register_blueprint(url_short, url_prefix='/')
 
     from api.models import UrlShort
     create_database(app)
