@@ -7,9 +7,10 @@
     </ul>
     <div class="form-group">
         <form method="POST">
-            <input type="text" class="form-control" placeholder="enter url to make shorter">
+            <input type="text" class="form-control" name="url_original" placeholder="enter url to make shorter">
             <br>
-            <p name="result">{{ new_url.url_shortened }}</p>
+
+            <a href="{{ new_url.url_shortened }}">{{ new_url.url_shortened }}</a></p>
             <div align="center">
                 <button type="submit" class="btn btn-primary">Get Pico URL</button>
             </div>
