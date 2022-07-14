@@ -2,7 +2,7 @@ from crypt import methods
 from flask import Blueprint, render_template, request, flash ,redirect, url_for,jsonify
 from datetime import datetime,timedelta
 
-from config import db, get_random
+from config import db, get_random,filter_database
 # from app import app
 from api.models import UrlShort
 
@@ -45,8 +45,10 @@ def home():
 # go to shortened url
 @url_short.route('/picourl/<short>')
 def go_website(short):
+    # check and update database, remove old queries
+    filter_database(UrlShort)
     short_url = UrlShort.query.filter_by(url_shortened=request.url).first()
     if short_url:
         return redirect(short_url.url_original)
     else:
-        return 404, 'No such url'
+        return render_template('404.html')
