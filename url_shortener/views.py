@@ -16,7 +16,7 @@ def home():
         url_original = request.form['url_original']
         db_query = UrlShort.query.filter_by(url_original=url_original).first()
         if db_query:
-            flash('Url already exists')
+            flash('Url already exists',category='error')
             url_shortened = UrlShort.query.order_by(UrlShort.id.desc()).first()
         else:
             url_shortened = get_random() # returns random 5 symbol value
