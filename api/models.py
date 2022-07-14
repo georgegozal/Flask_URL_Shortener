@@ -12,4 +12,4 @@ class UrlShort(db.Model):
         default=d.now() + t(30)
     )
     used = db.Column(db.Integer,default=0)
-    pro_user = db.Column(db.Boolean,default=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

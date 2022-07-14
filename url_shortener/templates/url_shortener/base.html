@@ -22,12 +22,15 @@
         <div class="collapse navbar-collapse" id="navbar">
             <div class="navbar-nav">
 
-                    <a class="nav-item nav-link" id="home" href="/">Home</a>
-                    <a class="nav-item nav-link" href="{{ url_for('api.get_all_urls') }}">All URLs</a>
-                    {#<a class="nav-item nav-link" id="logout" href="/logout">Log Out</a>
-                    <a class="nav-item nav-link" id="login" href="/login">Log In</a>
-                    <a class="nav-item nav-link" id="sign-up" href="/sign-up">Sign Up</a>#}
+                <a class="nav-item nav-link" id="home" href="/">Home</a>
+                <a class="nav-item nav-link" href="{{ url_for('api.get_all_urls') }}">All URLs</a>
+                {% if not user.is_authenticated %}
+                    <a class="nav-item nav-link" id="login" href="{{ url_for('auth.login') }}">Log In</a>
+                    <a class="nav-item nav-link" id="sign-up" href="{{ url_for('auth.sign_up') }}">Sign Up</a>
+                {% else %}
+                    <a class="nav-item nav-link" id="logout" href="{{ url_for('auth.logout') }}">Log Out</a>
 
+                {% endif %}
 
             </div>
         </div>  
@@ -42,12 +45,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% else %}
-                <div class="alert alert-success alert-dismissable fade show" role="allert">
-                    {{ message }}
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
             {% endif %}
             {% endfor %}
         {% endif %}

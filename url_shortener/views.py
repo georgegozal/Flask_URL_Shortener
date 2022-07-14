@@ -1,6 +1,6 @@
 from crypt import methods
 from flask import Blueprint, render_template, request, flash ,redirect, url_for,jsonify
-from datetime import datetime,timedelta
+from flask_login import login_required, current_user
 
 from config import db, get_random,filter_database
 # from app import app
@@ -39,7 +39,7 @@ def home():
             db.session.commit()
             url_shortened = UrlShort.query.order_by(UrlShort.id.desc()).first()
 
-    return render_template('home.html',new_url=url_shortened)
+    return render_template('home.html',new_url=url_shortened,user=current_user)
 
 
 # go to shortened url

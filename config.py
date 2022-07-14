@@ -1,7 +1,8 @@
 from flask import Flask #, jsonify,request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from datetime import datetime,timedelta
+from datetime import datetime
+from flask_login import LoginManager
 import string
 import random
 import os
@@ -20,12 +21,23 @@ def create_app():
 
     from api.views import api
     from url_shortener.views import url_short
+    from auth.views import auth
     app.register_blueprint(api, url_prefix='/api')
     app.register_blueprint(url_short, url_prefix='/')
+    app.register_blueprint(auth,url_prefix='/auth')
 
     from api.models import UrlShort
     create_database(app)
     migrate = Migrate(app,db)
+
+    from auth.models import User
+    login_manager = LoginManager()
+    login_manager.login_view = 'auth.login'
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     return app
 
@@ -41,12 +53,8 @@ def get_random():
 
 def filter_database(table):
     now = datetime.now()
-    # t = timedelta(2)
-    # time = t +now
     db_query = table.query.all()
     for url in db_query:
         if url.date < now:
             db.session.delete(url)
             db.session.commit()
-            
-    
