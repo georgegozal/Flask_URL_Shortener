@@ -23,7 +23,7 @@
             <div class="navbar-nav">
 
                 <a class="nav-item nav-link" id="home" href="/">Home</a>
-                <a class="nav-item nav-link" href="{{ url_for('api.get_all_urls') }}">All URLs</a>
+                <a class="nav-item nav-link" href="{{ url_for('url_short.get_all_urls') }}">{{ current_user.first_name }} URLs</a>
                 {% if not user.is_authenticated %}
                     <a class="nav-item nav-link" id="login" href="{{ url_for('auth.login') }}">Log In</a>
                     <a class="nav-item nav-link" id="sign-up" href="{{ url_for('auth.sign_up') }}">Sign Up</a>
@@ -57,6 +57,7 @@
 
 
     <div class="container">
+        <h3>Hello {{ current_user.first_name }}</h3>
         {% block content %}
         {% endblock %}
     </div>

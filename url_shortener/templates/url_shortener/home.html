@@ -1,19 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 
-<ul>Hello to Api
-    <li>/api/urls GET # get all urls </li>
-    <li>/api/url POST # create pico url </li>
-    </ul>
+
     <div class="form-group">
         <form method="POST">
             <input type="text" class="form-control" name="url_original" placeholder="enter url to make shorter">
             <br>
 
+            {% if user.is_authenticated %}
+                {% if user.pro_user == 'True' %}
+                <input type="text" class="form-control" name="custom_sufix" placeholder="Enter custom sufix for url">
+                {% endif %}
+            {% endif %}
+
             <a href="{{ new_url.url_shortened }}">{{ new_url.url_shortened }}</a></p>
+
             <div align="center">
                 <button type="submit" class="btn btn-primary">Get Pico URL</button>
             </div>
         </form>
+        <br><br>
+        
+        
+        <ul>You can get POST and GET data to REST API
+            <li>/api/urls GET # get all urls </li>
+            <li>/api/url POST # create pico url </li>
+        </ul>
     </div>
 {% endblock %}
