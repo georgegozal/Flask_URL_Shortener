@@ -6,7 +6,7 @@ from datetime import datetime as d, timedelta as t
 class UrlShort(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     url_original = db.Column(db.String(250))
-    url_shortened = db.Column(db.String(25))
+    url_shortened = db.Column(db.String(35))
     date = db.Column(
         db.DateTime(timezone=True),
         default=d.now() + t(30)

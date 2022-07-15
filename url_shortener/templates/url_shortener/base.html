@@ -23,7 +23,12 @@
             <div class="navbar-nav">
 
                 <a class="nav-item nav-link" id="home" href="/">Home</a>
-                <a class="nav-item nav-link" href="{{ url_for('url_short.get_all_urls') }}">{{ current_user.first_name }} URLs</a>
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{{ url_for('url_short.get_all_urls') }}">{{ current_user.first_name }} URLs</a>
+                {% else %}
+                    <a class="nav-item nav-link" href="{{ url_for('url_short.get_all_urls') }}"> Public URLs</a>
+                {% endif %}
+
                 {% if not user.is_authenticated %}
                     <a class="nav-item nav-link" id="login" href="{{ url_for('auth.login') }}">Log In</a>
                     <a class="nav-item nav-link" id="sign-up" href="{{ url_for('auth.sign_up') }}">Sign Up</a>
