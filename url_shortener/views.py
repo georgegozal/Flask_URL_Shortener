@@ -28,16 +28,13 @@ def home():
                 if get_user_info.pro_user == 'True':
                     # get custom sufix from user
                     url_sufix = request.form['custom_sufix']
-                    # print('უსერ სუფიქს',url_sufix)
                     db_query = UrlShort.query.all()
-                    # print(db_query,type(db_query),'დბქუერიიი')
                     if db_query:
                         for url in db_query:
                             while True:
                                 # if user custom sufix is not same as url_sufix from database,take it
                                 if url.url_shortened.split('/')[-1] != url_sufix:
                                     url_shortened = str(request.url) +'picourl/' + url_sufix
-                                    print(url_shortened,'ურლ შორთენეეეეეედ')
                                     break
                                 else:
                                     flash('Sufix already exists in database, try another',category='error')
@@ -58,12 +55,10 @@ def home():
                     )
             except AttributeError:
                 url_shortened = get_changed_url(UrlShort,request)
-                print(url_shortened,'პრიიინტ')
                 add_to_database = UrlShort(
                     url_original = url_original,
                     url_shortened = url_shortened
                 )
-            print(url_shortened,'ურლ შორთენეეეეეედ')
             db.session.add(add_to_database)
             db.session.commit()
             url_shortened = UrlShort.query.order_by(UrlShort.id.desc()).first()
