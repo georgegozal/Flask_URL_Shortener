@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(url_short, url_prefix='/')
     app.register_blueprint(auth,url_prefix='/auth')
 
-    from api.models import UrlShort
+    from url_shortener.models import UrlShort
     create_database(app)
     migrate = Migrate(app,db)
 
