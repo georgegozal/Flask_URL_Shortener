@@ -5,7 +5,7 @@ from flask_login import login_required, current_user
 
 from config import db, filter_database, get_changed_url
 # from app import app
-from url_shortener.models import UrlShort
+from api.models import UrlShort
 from auth.models import User
 
 url_short = Blueprint('url_short',__name__,template_folder='templates/url_shortener')
