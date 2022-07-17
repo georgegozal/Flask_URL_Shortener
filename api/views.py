@@ -1,13 +1,14 @@
 from crypt import methods
-from flask import Blueprint,request,jsonify
+from flask import Blueprint, render_template, request, flash ,redirect, url_for,jsonify
 from config import db, get_random
-from url_shortener.models import UrlShort
+from .models import UrlShort
 
-api = Blueprint('api',__name__,)
+api = Blueprint('api',__name__,template_folder='templates/api')
 
 # add url to database
 @api.route('/url',methods=['POST'])
 def post():        
+    print('პრიიინტ',request.url)
     request_data = request.get_json()
     url_original = request_data['url_original']
     # get data from database to check if it already exists in database

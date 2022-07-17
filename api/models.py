@@ -9,7 +9,7 @@ class UrlShort(db.Model):
     url_shortened = db.Column(db.String(35))
     date = db.Column(
         db.DateTime(timezone=True),
-        default=d.now() + t(30)# add 30 days for url lifespan
+        default=d.now() + t(30)
     )
     used = db.Column(db.Integer,default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
