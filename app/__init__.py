@@ -1,23 +1,24 @@
 from flask import Flask, render_template
 from app.config import Config
-from api.views import api
-from url_shortener.views import url_short
-from api.models import UrlShort
-from auth.models import User
-from auth.views import auth
+from app.api.views import api
+from app.url_shortener.views import url_short
+from app.commands.commands import init_db
+from app.api.models import UrlShort
+from app.auth.models import User
+from app.auth.views import auth
 from app.extensions import db, migrate, login_manager
 
 
 
 BLUEPRINTS = [api, auth, url_short]
-COMMANDS = []
+COMMANDS = [init_db]
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # register_commands(app)
+    register_commands(app)
     register_extensions(app)
     register_blueprints(app)
     # register_admin_panel(app)
@@ -55,3 +56,9 @@ def register_blueprints(app):
 
     for blueprint in BLUEPRINTS:
         app.register_blueprint(blueprint)
+
+
+def register_commands(app):
+
+    for command in COMMANDS:
+        app.cli.add_command(command)

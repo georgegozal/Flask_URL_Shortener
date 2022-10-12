@@ -1,5 +1,4 @@
-from distutils.log import debug
-from config import create_app
+from app import create_app
 
 app = create_app()
 
