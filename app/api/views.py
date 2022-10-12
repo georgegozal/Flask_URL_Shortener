@@ -1,14 +1,15 @@
-from crypt import methods
-from flask import Blueprint, render_template, request, flash ,redirect, url_for,jsonify
-from config import db, get_random
+from flask import Blueprint, request, jsonify
+from app.extensions import db
+from app.config import get_random
 from .models import UrlShort
 
-api = Blueprint('api',__name__,template_folder='templates/api')
+
+api = Blueprint('api', __name__, template_folder='templates/api')
+
 
 # add url to database
-@api.route('/url',methods=['POST'])
+@api.route('/url', methods=['POST'])
 def post():        
-    print('პრიიინტ',request.url)
     request_data = request.get_json()
     url_original = request_data['url_original']
     # get data from database to check if it already exists in database
@@ -24,7 +25,7 @@ def post():
         )
     # if url_original is not in database
     else:
-        url_sufix = get_random() # returns random 5 symbol value
+        url_sufix = get_random()  # returns random 5 symbol value
         db_query = UrlShort.query.all()
         for url in db_query:
             while True:
@@ -52,16 +53,17 @@ def post():
                 }
         return jsonify(url), 201
 
+
 # get all urls
-@api.route('/urls',methods=['GET'])
+@api.route('/urls', methods=['GET'])
 def get_all_urls():
     db_query = UrlShort.query.all()
     urls_list = []
     for url in db_query:
         u = {
-                "id":url.id,
-                "url_original":url.url_original,
-                "url_shortened":url.url_shortened,
+                "id": url.id,
+                "url_original": url.url_original,
+                "url_shortened": url.url_shortened,
 
                 }
             
