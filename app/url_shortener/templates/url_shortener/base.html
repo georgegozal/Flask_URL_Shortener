@@ -23,18 +23,17 @@
             <div class="navbar-nav">
 
                 <a class="nav-item nav-link" id="home" href="/">Home</a>
-                {% if user.is_authenticated %}
+                {% if current_user.is_authenticated %}
                     <a class="nav-item nav-link" href="{{ url_for('url_short.get_all_urls') }}">{{ current_user.first_name }} URLs</a>
                 {% else %}
                     <a class="nav-item nav-link" href="{{ url_for('url_short.get_all_urls') }}"> Public URLs</a>
                 {% endif %}
 
-                {% if not user.is_authenticated %}
+                {% if not current_user.is_authenticated %}
                     <a class="nav-item nav-link" id="login" href="{{ url_for('auth.login') }}">Log In</a>
                     <a class="nav-item nav-link" id="sign-up" href="{{ url_for('auth.sign_up') }}">Sign Up</a>
-                {% else %}
+                {% else %}https://github.com/georgegozal/flask_microblog/blob/main/app/__init__.py
                     <a class="nav-item nav-link" id="logout" href="{{ url_for('auth.logout') }}">Log Out</a>
-
                 {% endif %}
 
             </div>

@@ -33,7 +33,7 @@ def home():
                             while True:
                                 # if user custom sufix is not same as url_sufix from database,take it
                                 if url.url_shortened.split('/')[-1] != url_sufix:
-                                    url_shortened = str(request.url) +' picourl/' + url_sufix
+                                    url_shortened = str(request.url) + 'picourl/' + url_sufix
                                     break
                                 else:
                                     flash('Sufix already exists in database, try another', category='error')
