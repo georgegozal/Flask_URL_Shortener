@@ -1,5 +1,5 @@
 # Flask_URL_Shortener
-
+[![build](https://github.com/georgegozal/Flask_URL_Shortener/actions/workflows/tests.yml/badge.svg)](https://github.com/georgegozal/Flask_URL_Shortener/actions/workflows/tests.yml)
 
 # you can test my app on heroku
 > https://flaskpicourl.herokuapp.com/
