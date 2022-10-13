@@ -1,0 +1,42 @@
+name: build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  test:
+
+    runs-on:  ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-versions:  [3.8, 3.9]
+
+
+    steps:
+      - uses: actions/checkout@v3
+
+
+      - name: Set Up Python for ${{ matrix.python-versions }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-versions }}
+      
+      - name: Instaling Dependencies
+        run:  pip install tox tox-gh-actions
+        
+      - name: Running Tests with tox
+        run:  tox
+
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag flask_url_shortener:$(date +%s)
