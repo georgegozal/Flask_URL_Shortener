@@ -9,7 +9,6 @@ from app.auth.views import auth
 from app.extensions import db, migrate, login_manager
 
 
-
 BLUEPRINTS = [api, auth, url_short]
 COMMANDS = [init_db]
 

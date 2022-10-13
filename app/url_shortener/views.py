@@ -38,25 +38,25 @@ def home():
                                 else:
                                     flash('Sufix already exists in database, try another', category='error')
                     add_to_database = UrlShort(
-                        url_original = url_original,
-                        url_shortened = url_shortened,
-                        user_id = current_user.id
+                        url_original=url_original,
+                        url_shortened=url_shortened,
+                        user_id=current_user.id
                     )
                 # if user is not PRO
-                else: 
+                else:
                     # get random sufix
-                    url_shortened= get_changed_url(UrlShort, request)
+                    url_shortened = get_changed_url(UrlShort, request)
                     # add new urls in database model
                     add_to_database = UrlShort(
-                        url_original = url_original,
-                        url_shortened = url_shortened,
-                        user_id = current_user.id
+                        url_original=url_original,
+                        url_shortened=url_shortened,
+                        user_id=current_user.id
                     )
             except AttributeError:
                 url_shortened = get_changed_url(UrlShort, request)
                 add_to_database = UrlShort(
-                    url_original = url_original,
-                    url_shortened = url_shortened
+                    url_original=url_original,
+                    url_shortened=url_shortened
                 )
             db.session.add(add_to_database)
             db.session.commit()
@@ -73,7 +73,7 @@ def go_website(short):
     short_url = UrlShort.query.filter_by(url_shortened=request.url).first()
     if short_url:
         short_url.used += 1
-        db.session.commit() 
+        db.session.commit()
         return redirect(short_url.url_original)
     else:
         return render_template('404.html')
@@ -86,10 +86,10 @@ def get_public_urls():
     urls_list = []
     for url in urls:
         u = {
-                "id": url.id,
-                "url_original": url.url_original,
-                "url_shortened": url.url_shortened,
-                }
+            "id": url.id,
+            "url_original": url.url_original,
+            "url_shortened": url.url_shortened,
+        }
         urls_list.append(u)
     return jsonify(urls_list)
 
@@ -109,10 +109,10 @@ def get_user_urls(name):
             urls_list = []
             for url in urls:
                 u = {
-                        "id": url.id,
-                        "url_original": url.url_original,
-                        "url_shortened": url.url_shortened,
-                        }
+                    "id": url.id,
+                    "url_original": url.url_original,
+                    "url_shortened": url.url_shortened,
+                }
 
                 urls_list.append(u)
             return jsonify(urls_list)

@@ -21,10 +21,10 @@ class Config(object):
 def get_random():
     alfabet = string.ascii_lowercase
     nums = "0123456789" * 2
-    return ''.join(random.choices(alfabet + nums, k =5))
+    return ''.join(random.choices(alfabet + nums, k=5))
 
 
-def get_changed_url(table,request):
+def get_changed_url(table, request):
     url_sufix = get_random()  # returns random 5 symbol value
     db_query = table.query.all()
     if db_query:
@@ -34,7 +34,7 @@ def get_changed_url(table,request):
                 if url.url_shortened.split('/')[-1] != url_sufix:
                     break
                 else:
-                        url_sufix = get_random() 
+                    url_sufix = get_random()
             changed_url = str(request.url) + 'picourl/' + url_sufix
         return changed_url
 

@@ -1,5 +1,6 @@
-from app.extensions import db 
+from app.extensions import db
 from datetime import datetime as d, timedelta as t
+
 
 class UrlShort(db.Model):
     id = db.Column(db.Integer, primary_key=True)

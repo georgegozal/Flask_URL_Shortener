@@ -9,18 +9,18 @@ api = Blueprint('api', __name__, template_folder='templates/api')
 
 # add url to database
 @api.route('/api/url', methods=['POST'])
-def post():        
+def post():
     request_data = request.get_json()
     url_original = request_data['url_original']
     # get data from database to check if it already exists in database
     db_query = UrlShort.query.filter_by(url_original=url_original).first()
     # if value is not none, return shortened url from database
     if db_query:
-        return  jsonify(
+        return jsonify(
             {
-                'title':'already exists',
-                'url_original' : db_query.url_original, 
-                'url_shortened' : db_query.url_shortened
+                'title': 'already exists',
+                'url_original': db_query.url_original,
+                'url_shortened': db_query.url_shortened
             }
         )
     # if url_original is not in database
@@ -33,13 +33,13 @@ def post():
                 if url.url_shortened.split('/')[-1] != url_sufix:
                     break
                 else:
-                    url_sufix = get_random() 
-        url_short = str(request.url[:-7]) +'picourl/' + url_sufix
+                    url_sufix = get_random()
+        url_short = str(request.url[:-7]) + 'picourl/' + url_sufix
         # add new urls in database model
         add_to_database = UrlShort(
-            url_original = url_original,
-            url_shortened = url_short
-            )
+            url_original=url_original,
+            url_shortened=url_short
+        )
 
         db.session.add(add_to_database)
         db.session.commit()
@@ -47,10 +47,10 @@ def post():
         url_shortened = UrlShort.query.order_by(UrlShort.id.desc()).first()
 
         url = {
-                "id" : url_shortened.id,
-                'url_original' : url_shortened.url_original,
-                'url_shortened' : url_shortened.url_shortened
-                }
+            "id": url_shortened.id,
+            'url_original': url_shortened.url_original,
+            'url_shortened': url_shortened.url_shortened
+        }
         return jsonify(url), 201
 
 
@@ -61,11 +61,9 @@ def get_all_urls():
     urls_list = []
     for url in db_query:
         u = {
-                "id": url.id,
-                "url_original": url.url_original,
-                "url_shortened": url.url_shortened,
-
-                }
-            
+            "id": url.id,
+            "url_original": url.url_original,
+            "url_shortened": url.url_shortened,
+        }
         urls_list.append(u)
     return jsonify(urls_list)
