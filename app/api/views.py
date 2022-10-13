@@ -8,7 +8,7 @@ api = Blueprint('api', __name__, template_folder='templates/api')
 
 
 # add url to database
-@api.route('/url', methods=['POST'])
+@api.route('/api/url', methods=['POST'])
 def post():        
     request_data = request.get_json()
     url_original = request_data['url_original']
@@ -55,7 +55,7 @@ def post():
 
 
 # get all urls
-@api.route('/urls', methods=['GET'])
+@api.route('/api/urls', methods=['GET'])
 def get_all_urls():
     db_query = UrlShort.query.all()
     urls_list = []

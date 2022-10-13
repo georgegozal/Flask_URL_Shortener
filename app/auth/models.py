@@ -9,4 +9,4 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(150))
     pro_user = db.Column(db.String(4), default=False)
     # pro_user = db.Column(db.Boolean)
-    urls = db.relationship('UrlShort')
+    urls = db.relationship('UrlShort', backref='user')

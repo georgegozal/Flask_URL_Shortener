@@ -1,5 +1,4 @@
 from app.extensions import db 
-# from sqlalchemy.sql import func
 from datetime import datetime as d, timedelta as t
 
 class UrlShort(db.Model):

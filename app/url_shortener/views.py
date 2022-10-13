@@ -80,18 +80,43 @@ def go_website(short):
 
 
 @url_short.route('/urls', methods=['GET'])
-def get_all_urls():
-    try:
-        db_query = UrlShort.query.filter_by(user_id=current_user.id).all()
-    except AttributeError:
-        db_query = UrlShort.query.filter_by(user_id=None).all()
+def get_public_urls():
+
+    urls = UrlShort.query.filter_by(user=None).all()
     urls_list = []
-    for url in db_query:
+    for url in urls:
         u = {
                 "id": url.id,
                 "url_original": url.url_original,
                 "url_shortened": url.url_shortened,
                 }
-
         urls_list.append(u)
     return jsonify(urls_list)
+
+
+@url_short.route('/<name>/urls', methods=['GET'])
+def get_user_urls(name):
+
+    try:
+        user = User.query.filter_by(first_name=name).first()
+    except Exception as e:
+        print(e)
+        user = None
+
+    if user:
+        if current_user.first_name == user.first_name:
+            urls = UrlShort.query.filter_by(user_id=current_user.id).all()
+            urls_list = []
+            for url in urls:
+                u = {
+                        "id": url.id,
+                        "url_original": url.url_original,
+                        "url_shortened": url.url_shortened,
+                        }
+
+                urls_list.append(u)
+            return jsonify(urls_list)
+        else:
+            flash(f'You can`t see {user.first_name}`s urls', category='error')
+
+    return render_template('404.html')
