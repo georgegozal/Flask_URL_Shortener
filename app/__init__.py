@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from app.config import Config
 from app.api.views import api
 from app.url_shortener.views import url_short
-from app.commands.commands import init_db
+from app.commands.commands import add_admin_command, init_db_command
 from app.api.models import UrlShort
 from app.auth.models import User
 from app.auth.views import auth
@@ -10,7 +10,7 @@ from app.extensions import db, migrate, login_manager
 
 
 BLUEPRINTS = [api, auth, url_short]
-COMMANDS = [init_db]
+COMMANDS = [init_db_command, add_admin_command]
 
 
 def create_app():

@@ -44,12 +44,17 @@ def logout():
 
 @auth.route('/sign-up', methods=['GET', 'POST'])
 def sign_up():
+    print(request.form)
     if request.method == 'POST':
         email = request.form.get('email')
         first_name = request.form.get('first_name')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        pro_user = request.form['pro_user']
+        try:
+            pro_user = request.form['pro_user']
+        except Exception as e:
+            print(e)
+            pro_user = False
 
         user = User.query.filter_by(email=email).first()
 
